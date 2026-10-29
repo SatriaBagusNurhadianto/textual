@@ -370,8 +370,8 @@ class XTermParser(Parser[Message]):
 
         codes, end = match.groups(default="")
         codepoint_str, modifiers_str, text_str, *_ = codes.split(";") + ["", "", ""]
-        codepoint = int(codepoint_str or "1")
-        modifiers = int(modifiers_str or "0")
+        codepoint = int((codepoint_str.split(":")[0] if codepoint_str else "") or "1")
+        modifiers = int((modifiers_str.split(":")[0] if modifiers_str else "") or "0")
 
         for text in self._parse_colon_codepoints(text_str):
             if not (key := FUNCTIONAL_KEYS.get(f"{codepoint}{end}", "")):
